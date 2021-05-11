@@ -4,12 +4,15 @@ export default async (req, res, next) => {
   try {
     let token;
 
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
       token = req.headers.authorization.split(" ")[1];
     }
 
-    if(!token) {
-      return res.status(401).json({error: "Not authorized to access"});
+    if (!token) {
+      return res.status(401).json({ error: "Not authorized to access" });
     }
 
     const decodedToken = await admin.auth().verifyIdToken(token);
@@ -17,8 +20,7 @@ export default async (req, res, next) => {
 
     req.firebaseId = firebaseId;
     return next();
-
-  } catch(error) {
+  } catch (error) {
     return res.status(401).json(error.message);
   }
-}
+};
