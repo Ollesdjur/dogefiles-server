@@ -10,7 +10,6 @@ const authUser = async (req, res, next) => {
     if (await User.findOne({ firebaseId })) {
       return res.status(200).json({ success: "User already registered" });
     }
-
     await User.create({
       firebaseId: firebaseId,
     });
