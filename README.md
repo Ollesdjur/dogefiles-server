@@ -1,2 +1,2 @@
 # dogefiles-server
-The Dogefiles Server
+The Dogefiles Server.
