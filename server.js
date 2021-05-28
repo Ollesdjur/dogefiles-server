@@ -36,12 +36,14 @@ import signedUrl from "./Routes/signedUrl.js";
 import test from "./Routes/test.js";
 import fileDownload from "./Routes/fileDownload.js";
 import downloadLink from "./Routes/downloadLink.js";
+import S3 from "./Routes/S3.js";
 
 app.use("/file-download/", fileDownload);
 app.use("/test", test);
 app.use("/get-signed-url", signedUrl);
 app.use("/auth", auth);
 app.use("/download-link", downloadLink);
+app.use("/S3", S3);
 
 app.get("/", (req, res) => {
   res.json("KloudPole Root");

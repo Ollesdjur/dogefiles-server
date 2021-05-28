@@ -13,6 +13,9 @@
   "devDependencies": {
     "nodemon": "^2.0.7"
   },
+  "engines": {
+    "node": "v15.14.0"
+  },
   "dependencies": {
     "aws-sdk": "^2.874.0",
     "cors": "^2.8.5",
