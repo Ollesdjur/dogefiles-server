@@ -46,7 +46,7 @@ app.use("/download-link", downloadLink);
 app.use("/S3", S3);
 
 app.get("/", (req, res) => {
-  res.json("KloudPole Root");
+  res.json("Dogefiles Root");
 });
 
 const PORT = process.env.PORT || 5000;
