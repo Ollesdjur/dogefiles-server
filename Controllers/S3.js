@@ -163,12 +163,9 @@ export const updatePrivacy = async (req, res) => {
 };
 
 export const objectInfo = async (req, res) => {
-  const { user, key } = req.params;
+  const { id } = req.params;
   try {
-    const file = await File.findOne({
-      firebaseId: user,
-      key: `${user}/${key}`,
-    });
+    const file = await File.findById(id);
 
     if (!file)
       return res.status(404).json({ error: "Invalid Key, Not file found" });
@@ -182,6 +179,46 @@ export const objectInfo = async (req, res) => {
   }
 };
 
+// export const downloadUrl = async (req, res) => {
+//   const s3 = new AWS.S3({
+//     correctClockSkew: true,
+//     endpoint: process.env.AWS_S3_ENDPOINT,
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//     region: process.env.AWS_REGION,
+//     logger: console,
+//   });
+
+//   const { key } = req.query;
+
+//   try {
+//     const file = await File.findOne({ key });
+
+//     if (!file)
+//       return res.status(404).json({ error: "Invalid Key, Not file found" });
+
+//     if (file.privacy === "private")
+//       return res
+//         .status(400)
+//         .json({ error: "Private files are not availabe to download" });
+
+//     const params = {
+//       Bucket: "meow0007",
+//       Key: key,
+//       Expires: 1000,
+//       ResponseContentDisposition: `attachment; filename="${file.fileName}"`,
+//     };
+
+//     const url = s3.getSignedUrl("getObject", params);
+
+//     file.downloads += 1;
+//     await file.save();
+
+//     return res.status(200).json({ downloadLink: url });
+//   } catch (err) {
+//     res.status(404).json(err.message);
+//   }
+// };
 export const downloadUrl = async (req, res) => {
   const s3 = new AWS.S3({
     correctClockSkew: true,
@@ -191,11 +228,11 @@ export const downloadUrl = async (req, res) => {
     region: process.env.AWS_REGION,
     logger: console,
   });
-
-  const { key } = req.query;
+  // qKIJwQUnREePR9Yu7jisyTFVcJu1
+  const { id } = req.query;
 
   try {
-    const file = await File.findOne({ key });
+    const file = await File.findByIdAndUpdate(id, { downloads: downloads + 1 });
 
     if (!file)
       return res.status(404).json({ error: "Invalid Key, Not file found" });
@@ -214,8 +251,8 @@ export const downloadUrl = async (req, res) => {
 
     const url = s3.getSignedUrl("getObject", params);
 
-    file.downloads += 1;
-    await file.save();
+    // file.downloads += 1;
+    // await file.save();
 
     return res.status(200).json({ downloadLink: url });
   } catch (err) {

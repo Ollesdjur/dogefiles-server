@@ -14,7 +14,7 @@ import {
 
 // GET ROUTES
 router.route("/listObjects").get(verifyUser, listObjects);
-router.route("/objectInfo/:user/:key").get(objectInfo);
+router.route("/objectInfo/:id").get(objectInfo);
 router.route("/downloadObject").get(downloadUrl);
 
 // POST ROUTES
