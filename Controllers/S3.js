@@ -192,7 +192,7 @@ export const downloadUrl = async (req, res) => {
   const { id } = req.query;
 
   try {
-    const file = await File.findByIdAndUpdate(id, { downloads: 100 });
+    const file = await File.findById(id);
 
     if (!file)
       return res.status(404).json({ error: "Invalid Key, Not file found" });
@@ -204,12 +204,15 @@ export const downloadUrl = async (req, res) => {
 
     const params = {
       Bucket: "meow0007",
-      Key: key,
+      Key: file.key,
       Expires: 1000,
       ResponseContentDisposition: `attachment; filename="${file.fileName}"`,
     };
 
     const url = s3.getSignedUrl("getObject", params);
+
+    file.downloads += 1;
+    await file.save();
 
     return res.status(200).json({ downloadLink: url });
   } catch (err) {
