@@ -192,7 +192,7 @@ export const downloadUrl = async (req, res) => {
   const { id } = req.query;
 
   try {
-    const file = await File.findByIdAndUpdate(id, { downloads: downloads + 1 });
+    const file = await File.findByIdAndUpdate(id, { downloads: 100 });
 
     if (!file)
       return res.status(404).json({ error: "Invalid Key, Not file found" });
