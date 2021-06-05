@@ -216,6 +216,7 @@ export const downloadUrl = async (req, res) => {
 
     // Check if the user has already downloaded the file once in a day
     if (!(await IP_Logs.findOne({ ip: ip }))) {
+      await IP_Logs.create({ ip: ip });
       file.downloads += 1;
       await file.save();
     }
