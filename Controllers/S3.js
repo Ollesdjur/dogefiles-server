@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import { v4 } from "uuid";
 import File from "../Models/File.js";
+import IP_Logs from "../Models/IP_Logs.js";
 const uuidv4 = v4;
 
 export const signedUrl = async (req, res) => {
@@ -190,6 +191,8 @@ export const downloadUrl = async (req, res) => {
   });
 
   const { id } = req.query;
+  const ip =
+    req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
 
   try {
     const file = await File.findById(id);
@@ -211,8 +214,11 @@ export const downloadUrl = async (req, res) => {
 
     const url = s3.getSignedUrl("getObject", params);
 
-    file.downloads += 1;
-    await file.save();
+    // Check if the user has already downloaded the file once in a day
+    if (!(await IP_Logs.findOne({ ip: ip }))) {
+      file.downloads += 1;
+      await file.save();
+    }
 
     return res.status(200).json({ downloadLink: url });
   } catch (err) {
