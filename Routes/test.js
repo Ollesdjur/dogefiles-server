@@ -5,7 +5,7 @@ import sniffData from "../Middlewares/sniffData.js";
 
 const test = async (req, res, next) => {
   // const ipLog = await IP_Logs.create({});
-  // console.log(ipLog);
+  // console.log(ipLog)
   res.status(200).json({
     success: "Your sniffed data",
     ip: req.ip,
