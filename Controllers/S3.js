@@ -194,44 +194,39 @@ export const downloadUrl = async (req, res) => {
   const ip =
     req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
 
-  // try {
-  const file = await File.findById(id);
-  if (!file)
-    return res.status(404).json({ error: "Invalid Key, Not file found" });
+  try {
+    const file = await File.findById(id);
+    if (!file)
+      return res.status(404).json({ error: "Invalid Key, Not file found" });
 
-  if (file.privacy === "private")
-    return res
-      .status(400)
-      .json({ error: "Private files are not availabe to download" });
+    if (file.privacy === "private")
+      return res
+        .status(400)
+        .json({ error: "Private files are not availabe to download" });
 
-  const params = {
-    Bucket: "meow0007",
-    Key: file.key,
-    Expires: 1000,
-    ResponseContentDisposition: `attachment; filename="${file.fileName}"`,
-  };
+    const params = {
+      Bucket: "meow0007",
+      Key: file.key,
+      Expires: 1000,
+      ResponseContentDisposition: `attachment; filename="${file.fileName}"`,
+    };
 
-  const url = s3.getSignedUrl("getObject", params);
-  // const download = {
-  //   ip: ip,
-  // };
+    const url = s3.getSignedUrl("getObject", params);
 
-  const feedback = {
-    name: user,
-    decision: "good",
-    comment: "very good",
-  };
+    const download = {
+      ip: ip,
+    };
 
-  // Check if the user has already downloaded the file once in a day
-  // if (!(await IP_Logs.findOne({ ip: ip }))) {
-  // await IP_Logs.create({ ip: ip });
-  file.downloads = [...file.downloads, feedback];
+    // Check if the user has already downloaded the file once in a day
+    // if (!(await IP_Logs.findOne({ ip: ip }))) {
+    // await IP_Logs.create({ ip: ip });
+    file.downloads = [...file.downloads, download];
 
-  await file.save();
-  // }
+    await file.save();
+    // }
 
-  return res.status(200).json({ downloadLink: url, file });
-  // } catch (err) {
-  //   res.status(404).json(err.message);
-  // }
+    return res.status(200).json({ downloadLink: url, file });
+  } catch (err) {
+    res.status(404).json(err.message);
+  }
 };
