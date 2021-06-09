@@ -213,18 +213,14 @@ export const downloadUrl = async (req, res) => {
 
     const url = s3.getSignedUrl("getObject", params);
 
-    const download = {
-      ip: ip,
-    };
-
     // Check if the user has already downloaded the file once in a day
-    // if (!(await IP_Logs.findOne({ ip: ip }))) {
-    // await IP_Logs.create({ ip: ip });
-    // file.downloads = [...file.downloads, download];
-    file.downloads.push(download);
+    if (!(await IP_Logs.findOne({ ip: ip }))) {
+      await IP_Logs.create({ ip: ip });
 
-    await file.save();
-    // }
+      file.downloads.push({ ip: ip });
+
+      await file.save();
+    }
 
     return res.status(200).json({ downloadLink: url, file });
   } catch (err) {
