@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
-const downloadSchema = mongoose.Schema(
+const feedbackSchema = mongoose.Schema(
   {
-    ip: { type: String, required: true },
-    // createdAt: { type: Date, default: Date.now },
+    name: { type: String, required: true },
+    decision: { type: Boolean, required: true },
+    comment: { type: String, required: true },
+    required: false,
   },
   {
     timestamps: true,
@@ -18,7 +20,7 @@ const fileSchema = new mongoose.Schema(
     fileSize: { type: Number, required: true },
     fileType: { type: String, required: true },
     key: { type: String, required: true },
-    downloads: [downloadSchema],
+    downloads: [feedbackSchema],
     privacy: { type: String, default: "private" },
   },
   {
