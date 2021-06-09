@@ -5,7 +5,6 @@ const feedbackSchema = mongoose.Schema(
     name: { type: String, required: true },
     decision: { type: Boolean, required: true },
     comment: { type: String, required: true },
-    required: false,
   },
   {
     timestamps: true,
