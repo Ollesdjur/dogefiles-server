@@ -1,20 +1,15 @@
 import mongoose from "mongoose";
 
-// const fileSchema = new mongoose.Schema(
-//   {
-//     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-//     userName: { type: String, required: true },
-//     firebaseId: { type: String, required: true, unique: true },
-//     email: { type: String, required: true, unique: true },
-//     fileName: { type: String, required: true },
-//     fileSize: { type: String, required: true },
-//     url: { type: String, required: true },
-//     urlExpiry: { type: Number, reuired: true },
-//   },
-//   {
-//     timestamps: true
-//   }
-// )
+const downloadSchema = mongoose.Schema(
+  {
+    ip: { type: String, required: true },
+    // createdAt: { type: Date, default: Date.now },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const fileSchema = new mongoose.Schema(
   {
     // user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
@@ -23,7 +18,7 @@ const fileSchema = new mongoose.Schema(
     fileSize: { type: Number, required: true },
     fileType: { type: String, required: true },
     key: { type: String, required: true },
-    downloads: { type: Number, default: 0 },
+    downloads: [downloadSchema],
     privacy: { type: String, default: "private" },
   },
   {
