@@ -32,7 +32,7 @@ export const signedUrl = async (req, res) => {
         ["content-length-range", 0, 1000000000],
       ],
       Expires: 1800,
-      Bucket: "meow0007",
+      Bucket: "hello0007",
     },
     (err, signed) => {
       console.log(err);
@@ -81,7 +81,7 @@ export const listObjects = (req, res) => {
   });
   console.log("recieved", firebaseId);
   var params = {
-    Bucket: "meow0007",
+    Bucket: "hello0007",
   };
   s3.listObjects(params, function (err, data) {
     if (err) {
@@ -140,7 +140,7 @@ export const deleteFile = async (req, res) => {
   const { key, firebaseId } = req.body;
 
   const params = {
-    Bucket: "meow0007",
+    Bucket: "hello0007",
     Key: key,
   };
 
@@ -205,7 +205,7 @@ export const downloadUrl = async (req, res) => {
         .json({ error: "Private files are not availabe to download" });
 
     const params = {
-      Bucket: "meow0007",
+      Bucket: "hello0007",
       Key: file.key,
       Expires: 1000,
       ResponseContentDisposition: `attachment; filename="${file.fileName}"`,
