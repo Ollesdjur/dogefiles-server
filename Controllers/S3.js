@@ -10,6 +10,12 @@ export const signedUrl = async (req, res) => {
   const { fileName, fileSize, fileType } = req.body;
   console.log(fileName, fileSize, fileType);
 
+  if (fileSize > 1.01e8) {
+    return res
+      .status(400)
+      .json({ error: "Upload size exceeded. Max size is 100 MB" });
+  }
+
   // useAccelerateEndpoint: true :( Paid feature
   const s3 = new AWS.S3({
     correctClockSkew: true,
