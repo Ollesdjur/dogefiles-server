@@ -29,7 +29,7 @@ export const signedUrl = async (req, res) => {
       },
       Conditions: [
         // ["starts-with", "$Content-Type", "image/"],
-        ["content-length-range", 0, 1000000000],
+        ["content-length-range", 0, 1.01e8],
       ],
       Expires: 1800,
       Bucket: "hello0007",
