@@ -1,12 +1,12 @@
-import AWS from "aws-sdk";
 import { v4 } from "uuid";
 import File from "../Models/File.js";
 import IP_Logs from "../Models/IP_Logs.js";
 const uuidv4 = v4;
+import getS3 from "../Config/s3.js";
 
 export const signedUrl = async (req, res) => {
+  const s3 = getS3();
   const firebaseId = req.firebaseId;
-  // const firebaseId = "qKIJwQUnREePR9Yu7jisyTFVcJu1";
   const { fileName, fileSize, fileType } = req.body;
   console.log(fileName, fileSize, fileType);
 
@@ -17,14 +17,6 @@ export const signedUrl = async (req, res) => {
   }
 
   // useAccelerateEndpoint: true :( Paid feature
-  const s3 = new AWS.S3({
-    correctClockSkew: true,
-    endpoint: process.env.AWS_S3_ENDPOINT,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
-    logger: console,
-  });
 
   const uuidv = uuidv4();
 
@@ -75,16 +67,10 @@ export const signedUrl = async (req, res) => {
 };
 
 export const listObjects = (req, res) => {
+  const s3 = getS3();
+
   const firebaseId = req.firebaseId;
 
-  const s3 = new AWS.S3({
-    correctClockSkew: true,
-    endpoint: process.env.AWS_S3_ENDPOINT,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
-    logger: console,
-  });
   console.log("recieved", firebaseId);
   var params = {
     Bucket: "hello0007",
@@ -134,14 +120,7 @@ export const listUploads = async (req, res) => {
 };
 
 export const deleteFile = async (req, res) => {
-  const s3 = new AWS.S3({
-    correctClockSkew: true,
-    endpoint: process.env.AWS_S3_ENDPOINT,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
-    logger: console,
-  });
+  const s3 = getS3();
 
   const { key, firebaseId } = req.body;
 
@@ -187,14 +166,7 @@ export const objectInfo = async (req, res) => {
 };
 
 export const downloadUrl = async (req, res) => {
-  const s3 = new AWS.S3({
-    correctClockSkew: true,
-    endpoint: process.env.AWS_S3_ENDPOINT,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
-    logger: console,
-  });
+  const s3 = getS3();
 
   const { id } = req.query;
   const ip =
