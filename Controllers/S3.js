@@ -122,10 +122,10 @@ export const listUploads = async (req, res) => {
 export const deleteFile = async (req, res) => {
   const s3 = getS3();
 
-  const { key, firebaseId } = req.body;
+  const { bucket, key, firebaseId } = req.body;
 
   const params = {
-    Bucket: "hello0007",
+    Bucket: bucket,
     Key: key,
   };
 
@@ -204,4 +204,41 @@ export const downloadUrl = async (req, res) => {
   } catch (err) {
     res.status(404).json(err.message);
   }
+};
+
+export const presignedAvatarUrl = async (req, res) => {
+  const s3 = getS3();
+  const firebaseId = req.firebaseId;
+  const { fileName, fileSize, fileType } = req.body;
+  console.log(fileName, fileSize, fileType);
+
+  if (fileSize > 2e6) {
+    return res
+      .status(400)
+      .json({ error: "Upload size exceeded. Max size is 2 MB" });
+  }
+
+  const uuidv = uuidv4();
+
+  s3.createPresignedPost(
+    {
+      Fields: {
+        key: `${firebaseId}/${fileName}-${uuidv}.${fileType.split("/")[1]}`,
+      },
+      Conditions: [
+        // ["starts-with", "$Content-Type", "image/"],
+        ["content-length-range", 0, 2e6],
+      ],
+      Expires: 1800,
+      Bucket: "dogefiles-avatar",
+    },
+    (err, signed) => {
+      console.log(signed);
+      console.log(err);
+      if (!err) return res.json(signed);
+
+      return res.status(400).json({ error: err.message });
+      // https://avatar0007.s3.eu-central-1.wasabisys.com//'
+    }
+  );
 };

@@ -11,6 +11,7 @@ import {
   updatePrivacy,
   objectInfo,
   downloadUrl,
+  presignedAvatarUrl,
 } from "../Controllers/S3.js";
 
 // GET ROUTES
@@ -20,6 +21,7 @@ router.route("/downloadObject").get(sniffData, downloadUrl);
 
 // POST ROUTES
 router.route("/signedUrl").post(verifyUser, signedUrl);
+router.route("/presignedAvatarUrl").post(verifyUser, presignedAvatarUrl);
 router.route("/listUploads").post(listUploads);
 router.route("/saveFileToDB").post(saveFileToDB);
 router.route("/deleteFile").post(deleteFile);
