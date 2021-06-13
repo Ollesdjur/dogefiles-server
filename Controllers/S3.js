@@ -73,7 +73,7 @@ export const listObjects = (req, res) => {
 
   console.log("recieved", firebaseId);
   var params = {
-    Bucket: "hello0007",
+    Bucket: "dogefiles-main",
   };
   s3.listObjects(params, function (err, data) {
     if (err) {
@@ -183,7 +183,7 @@ export const downloadUrl = async (req, res) => {
         .json({ error: "Private files are not availabe to download" });
 
     const params = {
-      Bucket: "hello0007",
+      Bucket: "dogefiles-main",
       Key: file.key,
       Expires: 1000,
       ResponseContentDisposition: `attachment; filename="${file.fileName}"`,
