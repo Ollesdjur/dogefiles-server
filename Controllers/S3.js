@@ -30,7 +30,7 @@ export const signedUrl = async (req, res) => {
         ["content-length-range", 0, 1.01e8],
       ],
       Expires: 1800,
-      Bucket: "hello0007",
+      Bucket: "dogefiles-main",
     },
     (err, signed) => {
       console.log(err);
@@ -212,10 +212,14 @@ export const presignedAvatarUrl = async (req, res) => {
   const { fileName, fileSize, fileType } = req.body;
   console.log(fileName, fileSize, fileType);
 
-  if (fileSize > 2e6) {
+  if (fileType.includes("gif")) {
+    return res.status(400).json({ error: "gif is not allowed" });
+  }
+
+  if (fileSize > 1000000) {
     return res
       .status(400)
-      .json({ error: "Upload size exceeded. Max size is 2 MB" });
+      .json({ error: "Upload size exceeded. Max size is 1 MB" });
   }
 
   const uuidv = uuidv4();
@@ -226,15 +230,13 @@ export const presignedAvatarUrl = async (req, res) => {
         key: `${firebaseId}/${fileName}-${uuidv}.${fileType.split("/")[1]}`,
       },
       Conditions: [
-        // ["starts-with", "$Content-Type", "image/"],
-        ["content-length-range", 0, 2e6],
+        ["starts-with", "$Content-Type", "image/"],
+        ["content-length-range", 0, 1000000],
       ],
       Expires: 1800,
       Bucket: "dogefiles-avatar",
     },
     (err, signed) => {
-      console.log(signed);
-      console.log(err);
       if (!err) return res.json(signed);
 
       return res.status(400).json({ error: err.message });
