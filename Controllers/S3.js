@@ -23,7 +23,7 @@ export const signedUrl = async (req, res) => {
   s3.createPresignedPost(
     {
       Fields: {
-        key: `${firebaseId}/${fileName}-${uuidv}.${fileType.split("/")[1]}`,
+        key: `${firebaseId}/${fileName}-${uuidv}.${fileType}`,
       },
       Conditions: [
         // ["starts-with", "$Content-Type", "image/"],
@@ -227,7 +227,7 @@ export const presignedAvatarUrl = async (req, res) => {
   s3.createPresignedPost(
     {
       Fields: {
-        key: `${firebaseId}/${fileName}-${uuidv}.${fileType.split("/")[1]}`,
+        key: `${firebaseId}/${fileName}-${uuidv}.${fileType}`,
       },
       Conditions: [
         ["starts-with", "$Content-Type", "image/"],
