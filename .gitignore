@@ -9,10 +9,9 @@
 /coverage
 
 # config
-serviceAccountKey.json
+
 serviceAccountKeyDev.json
-serviceAccountKey.JSON
-serviceAccountKeyDev.JSON
+serviceAccountKey.json
 
 # production
 /build
