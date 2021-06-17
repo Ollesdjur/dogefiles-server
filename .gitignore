@@ -8,6 +8,12 @@
 # testing
 /coverage
 
+# config
+serviceAccountKey.json
+serviceAccountKeyDev.json
+serviceAccountKey.JSON
+serviceAccountKeyDev.JSON
+
 # production
 /build
 
