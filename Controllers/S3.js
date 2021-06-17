@@ -109,7 +109,8 @@ export const saveFileToDB = async (req, res) => {
 export const listUploads = async (req, res) => {
   const { firebaseId } = req.body;
   try {
-    const files = await File.find({ firebaseId });
+    const files = await File.find({ firebaseId }).sort({ createdAt: -1 });
+
     if (files.length === 0) {
       return res.status(404).json({ error: "Root is empty, No files found" });
     }
