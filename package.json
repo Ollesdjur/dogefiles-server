@@ -1,7 +1,7 @@
 {
-  "name": "kloudpole",
+  "name": "dogefiles",
   "version": "1.0.0",
-  "description": "KloudPole Backend Server",
+  "description": "Dogefiles Backend Server",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
-  "author": "kloudpole",
+  "author": "Dogefiles",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.7"
