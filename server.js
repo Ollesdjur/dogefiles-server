@@ -8,7 +8,11 @@ import loadServiceKey from "./Config/serviceKey.js";
 const app = express();
 dotenv.config();
 connectDB();
-loadServiceKey("Config/serviceAccountKey.json", admin);
+loadServiceKey(
+  process.env.SERVICE_ACCOUNT_KEY,
+  process.env.SERVICE_ACCOUNT_SECRET,
+  admin
+);
 app.use(cors());
 app.use(express.json());
 
