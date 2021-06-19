@@ -5,6 +5,7 @@ import connectDB from "./Config/db.js";
 import admin from "firebase-admin";
 import loadServiceKey from "./Config/serviceKey.js";
 import sniffData from "./Middlewares/sniffData.js";
+import rateLimitter from "./Middlewares/rateLimitter.js";
 
 const app = express();
 dotenv.config();
@@ -16,6 +17,7 @@ loadServiceKey(
 );
 app.use(cors());
 app.use(express.json());
+app.use(rateLimitter);
 
 app.use(sniffData, (req, res, next) => {
   const ip =
