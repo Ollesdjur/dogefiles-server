@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./Config/db.js";
 import admin from "firebase-admin";
 import loadServiceKey from "./Config/serviceKey.js";
+import sniffData from "./Middlewares/sniffData.js";
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,13 @@ loadServiceKey(
 );
 app.use(cors());
 app.use(express.json());
+
+app.use(sniffData, (req, res, next) => {
+  const ip =
+    req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
+  console.log(ip);
+  next();
+});
 
 // Route Imports
 import createNewBucket from "./Routes/bucket.js";
