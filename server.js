@@ -22,7 +22,7 @@ app.use(rateLimitter);
 app.use(sniffData, (req, res, next) => {
   const ip =
     req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
-  console.log(ip);
+  console.log("Client's IP ", ip);
   next();
 });
 

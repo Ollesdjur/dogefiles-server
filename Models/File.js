@@ -18,7 +18,7 @@ const fileSchema = new mongoose.Schema(
     fileType: { type: String, required: true },
     key: { type: String, required: true },
     downloads: { type: [downloadSchema], required: false },
-    privacy: { type: String, default: "private" },
+    privacy: { type: String, default: "public" },
   },
   {
     timestamps: true,
