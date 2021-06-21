@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const IP_LogsSchema = new mongoose.Schema(
   {
-    createdAt: { type: Date, expires: 86400, default: Date.now },
+    createdAt: { type: Date, expires: 60, default: Date.now },
     ip: { type: String, required: true },
   },
   {
