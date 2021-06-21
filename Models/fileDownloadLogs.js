@@ -3,7 +3,11 @@ import mongoose from "mongoose";
 const fileDownloadLogsSchema = new mongoose.Schema(
   {
     // createdAt: { type: Date, expires: 60, default: Date.now },
-    file: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "File" },
+    fileId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "File",
+    },
     ip: { type: String, required: true },
   },
   {
@@ -11,7 +15,7 @@ const fileDownloadLogsSchema = new mongoose.Schema(
   }
 );
 
-fileDownloadLogsSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 });
+fileDownloadLogsSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 }); //24 hours
 
 const fileDownloadLogs = mongoose.model(
   "fileDownloadLogs",
