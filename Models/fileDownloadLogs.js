@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const IP_LogsSchema = new mongoose.Schema(
+const fileDownloadLogsSchema = new mongoose.Schema(
   {
     // createdAt: { type: Date, expires: 60, default: Date.now },
     file: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "File" },
@@ -11,7 +11,10 @@ const IP_LogsSchema = new mongoose.Schema(
   }
 );
 
-IP_LogsSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 });
+fileDownloadLogsSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 });
 
-const IP_Logs = mongoose.model("IP_Logs", IP_LogsSchema);
-export default IP_Logs;
+const fileDownloadLogs = mongoose.model(
+  "fileDownloadLogs",
+  fileDownloadLogsSchema
+);
+export default fileDownloadLogs;

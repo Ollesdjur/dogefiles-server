@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import File from "../Models/File.js";
-import IP_Logs from "../Models/IP_Logs.js";
+import fileDownloadLogs from "../Models/fileDownloadLogs.js";
 const uuidv4 = v4;
 import getS3 from "../Config/s3.js";
 
@@ -193,8 +193,8 @@ export const downloadUrl = async (req, res) => {
     const url = s3.getSignedUrl("getObject", params);
 
     // Check if the user has already downloaded the file once in a day
-    if (!(await IP_Logs.findOne({ file: file._id, ip: ip }))) {
-      await IP_Logs.create({ file: file._id, ip: ip });
+    if (!(await fileDownloadLogs.findOne({ file: file._id, ip: ip }))) {
+      await fileDownloadLogs.create({ file: file._id, ip: ip });
 
       file.downloads.push({ ip: ip });
 
