@@ -193,8 +193,8 @@ export const downloadUrl = async (req, res) => {
     const url = s3.getSignedUrl("getObject", params);
 
     // Check if the user has already downloaded the file once in a day
-    if (!(await IP_Logs.findOne({ ip: ip }))) {
-      await IP_Logs.create({ ip: ip });
+    if (!(await IP_Logs.findOne({ file: file._id, ip: ip }))) {
+      await IP_Logs.create({ file: file._id, ip: ip });
 
       file.downloads.push({ ip: ip });
 
