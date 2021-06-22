@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   const MONGODB_URI =
-    process.env.ENVIRONMENT === "dev"
+    process.env.NODE_ENV === "development"
       ? process.env.MONGODB_URI_DEV
       : process.env.MONGODB_URI;
   await mongoose.connect(MONGODB_URI, {
