@@ -4,7 +4,6 @@ import cors from "cors";
 import connectDB from "./Config/db.js";
 import admin from "firebase-admin";
 import loadServiceKey from "./Config/serviceKey.js";
-import sniffData from "./Middlewares/sniffData.js";
 import rateLimitter from "./Middlewares/rateLimitter.js";
 import requestIp from "request-ip";
 
@@ -19,14 +18,7 @@ loadServiceKey(
 app.use(cors());
 app.use(express.json());
 app.use(rateLimitter);
-
-app.use(sniffData, (req, res, next) => {
-  console.log("from library", requestIp.getClientIp(req));
-  const ip =
-    req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
-  console.log("Client's IP ", ip);
-  next();
-});
+app.use(requestIp.mw());
 
 // Route Imports
 import createNewBucket from "./Routes/bucket.js";

@@ -1,7 +1,6 @@
 import express from "express";
 const router = express.Router();
 import verifyUser from "../Middlewares/verifyUser.js";
-import sniffData from "../Middlewares/sniffData.js";
 import {
   signedUrl,
   listObjects,
@@ -17,7 +16,7 @@ import {
 // GET ROUTES
 router.route("/listObjects").get(verifyUser, listObjects);
 router.route("/objectInfo/:id").get(objectInfo);
-router.route("/downloadObject").get(sniffData, downloadUrl);
+router.route("/downloadObject").get(downloadUrl);
 
 // POST ROUTES
 router.route("/signedUrl").post(verifyUser, signedUrl);

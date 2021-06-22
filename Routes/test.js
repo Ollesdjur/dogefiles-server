@@ -1,12 +1,10 @@
 import express from "express";
 const router = express.Router();
 import ipLogs from "../Models/ipLogs.js";
-import sniffData from "../Middlewares/sniffData.js";
 
 const test = async (req, res, next) => {
-  const ip =
-    req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
-  console.log(ip);
+  const ip = req.clientIp;
+  console.log("FROM TEST ROUTE", ip);
 
   if (await ipLogs.findOne({ ip: ip })) {
     return res
@@ -25,6 +23,6 @@ const test = async (req, res, next) => {
   });
 };
 
-router.route("/").get(sniffData, test);
+router.route("/").get(test);
 
 export default router;

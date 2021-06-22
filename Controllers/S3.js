@@ -170,8 +170,8 @@ export const downloadUrl = async (req, res) => {
   const s3 = getS3();
 
   const { id } = req.query;
-  const ip =
-    req.sniff_data.ip_address.ip || req.sniff_data.ip_address.xForwardedFor;
+  const ip = req.clientIp;
+  console.log("IP Address Requested to Download File", ip);
 
   try {
     const file = await File.findById(id);
@@ -194,11 +194,14 @@ export const downloadUrl = async (req, res) => {
 
     // Check if the user has already downloaded the file once in a day
     if (!(await fileDownloadLogs.findOne({ fileId: file._id, ip: ip }))) {
+      console.log("New IP found", ip);
       await fileDownloadLogs.create({ fileId: file._id, ip: ip });
 
       file.downloads.push({ ip: ip });
 
       await file.save();
+    } else {
+      console.log("Old IP found", ip);
     }
 
     return res.status(200).json({ downloadLink: url, file });
