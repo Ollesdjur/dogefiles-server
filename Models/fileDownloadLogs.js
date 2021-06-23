@@ -15,7 +15,7 @@ const fileDownloadLogsSchema = new mongoose.Schema(
   }
 );
 
-fileDownloadLogsSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 }); //24 hours
+fileDownloadLogsSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 }); //24 hours
 
 const fileDownloadLogs = mongoose.model(
   "fileDownloadLogs",
