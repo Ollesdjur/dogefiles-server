@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
-import File from "../Models/File.js";
-import fileDownloadLogs from "../Models/fileDownloadLogs.js";
+import File from "../../Models/File.js";
+import fileDownloadLogs from "../../Models/fileDownloadLogs.js";
 const uuidv4 = v4;
-import getS3 from "../Config/s3.js";
+import getS3 from "../../Config/s3.js";
 
 export const signedUrl = async (req, res) => {
   const s3 = getS3();

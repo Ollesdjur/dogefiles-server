@@ -5,6 +5,7 @@ const connectDB = async () => {
     process.env.NODE_ENV === "development"
       ? process.env.MONGODB_URI_DEV
       : process.env.MONGODB_URI;
+  console.log(MONGODB_URI);
   await mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
