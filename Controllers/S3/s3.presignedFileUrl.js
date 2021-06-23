@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
 const uuidv4 = v4;
 import getS3 from "../../Config/s3.js";
+import { DOGEFILES_MAIN, DOGEFILES_MAIN_DEV } from "./s3.constants.js";
 
 export default async function (req, res) {
   const s3 = getS3();
@@ -28,7 +29,10 @@ export default async function (req, res) {
         ["content-length-range", 0, 1.01e8],
       ],
       Expires: 1800,
-      Bucket: "dogefiles-main",
+      Bucket:
+        process.env.NODE_ENV === "development"
+          ? DOGEFILES_MAIN_DEV
+          : DOGEFILES_MAIN,
     },
     (err, signed) => {
       console.log(err);

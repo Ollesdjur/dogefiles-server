@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
 const uuidv4 = v4;
 import getS3 from "../../Config/s3.js";
+import { DOGEFILES_AVATAR, DOGEFILES_AVATAR_DEV } from "./s3.constants.js";
 
 export default async function presignedAvatarUrl(req, res) {
   const s3 = getS3();
@@ -30,7 +31,10 @@ export default async function presignedAvatarUrl(req, res) {
         ["content-length-range", 0, 1000000],
       ],
       Expires: 1800,
-      Bucket: "dogefiles-avatar",
+      Bucket:
+        process.env.NODE_ENV === "development"
+          ? DOGEFILES_AVATAR_DEV
+          : DOGEFILES_AVATAR,
     },
     (err, signed) => {
       if (!err) return res.json(signed);
