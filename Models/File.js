@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const downloadSchema = new mongoose.Schema(
   {
-    ip: { type: String, required: false },
+    ip: { type: String, required: false, select: false },
   },
   {
     timestamps: true,
