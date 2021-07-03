@@ -1,4 +1,6 @@
 import File from "../../Models/File.js";
+import User from "../../Models/User.js";
+import admin from "firebase-admin";
 
 export default async function objectInfo(req, res) {
   const { id } = req.params;
@@ -11,7 +13,23 @@ export default async function objectInfo(req, res) {
     if (file.privacy === "private")
       return res.status(400).json({ error: "The file is private" });
 
-    res.status(200).json(file);
+    const { contact, contactVisibility } = await User.findOne({
+      firebaseId: file.firebaseId,
+    });
+
+    const userInfo = await admin.auth().getUser(file.firebaseId);
+    const displayName = userInfo.displayName;
+
+    const fileAndUserInfo = {
+      file,
+      user: {
+        contactVisibility,
+        contact,
+        displayName,
+      },
+    };
+
+    res.status(200).json(fileAndUserInfo);
   } catch (err) {
     res.status(400).json(err.message);
   }

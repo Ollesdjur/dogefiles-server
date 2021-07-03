@@ -18,8 +18,8 @@ export default async (req, res, next) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const firebaseId = decodedToken.uid;
 
-    const userInfo = await admin.auth().getUser(firebaseId);
-    console.log(userInfo);
+    // const userInfo = await admin.auth().getUser(firebaseId);
+    // console.log(userInfo);
 
     req.firebaseId = firebaseId;
     return next();
