@@ -24,11 +24,13 @@ app.use(requestIp.mw());
 import createNewBucket from "./Routes/bucket.js";
 import test from "./Routes/test.js";
 import auth from "./Routes/auth.js";
+import user from "./Routes/user.js";
 import S3 from "./Routes/S3.js";
 
 app.use("/newBucket", createNewBucket);
 app.use("/test", test);
 app.use("/auth", auth);
+app.use("/user", user);
 app.use("/S3", S3);
 
 app.get("/", (req, res) => {
