@@ -19,6 +19,7 @@ export default async function objectInfo(req, res) {
 
     const userInfo = await admin.auth().getUser(file.firebaseId);
     const displayName = userInfo.displayName;
+    const photoURL = userInfo.photoURL;
 
     const fileAndUserInfo = {
       file,
@@ -26,6 +27,7 @@ export default async function objectInfo(req, res) {
         contactVisibility,
         contact,
         displayName,
+        photoURL,
       },
     };
 
