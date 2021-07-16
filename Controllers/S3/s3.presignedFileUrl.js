@@ -12,7 +12,7 @@ export default async function (req, res) {
   if (fileSize > 2.01e8) {
     return res
       .status(400)
-      .json({ error: "Upload size exceeded. Max size is 100 MB" });
+      .json({ error: "Upload size exceeded. Max size is 200 MB" });
   }
 
   // useAccelerateEndpoint: true :( Paid feature
