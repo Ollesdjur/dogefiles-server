@@ -9,7 +9,7 @@ export default async function (req, res) {
   const { fileName, fileSize, fileType } = req.body;
   console.log(fileName, fileSize, fileType);
 
-  if (fileSize > 1.01e8) {
+  if (fileSize > 2.01e8) {
     return res
       .status(400)
       .json({ error: "Upload size exceeded. Max size is 100 MB" });
@@ -26,7 +26,7 @@ export default async function (req, res) {
       },
       Conditions: [
         // ["starts-with", "$Content-Type", "image/"],
-        ["content-length-range", 0, 1.01e8],
+        ["content-length-range", 0, 2.01e8],
       ],
       Expires: 1800,
       Bucket:
