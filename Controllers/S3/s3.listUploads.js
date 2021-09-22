@@ -23,16 +23,12 @@ export default async function listUploads(req, res) {
       .sort({ createdAt: -1 })
       .exec();
 
-    const count = await File.countDocuments();
+    // const count = await File.countDocuments();
 
     if (files.length === 0) {
       return res.status(404).json({ error: "Root is empty, No files found" });
     }
-    return res.status(200).json({
-      files,
-      totalPages: Math.ceil(count / limit),
-      currentPage: page,
-    });
+    return res.status(200).json(files);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
