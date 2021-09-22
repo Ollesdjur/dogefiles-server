@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const downloadSchema = new mongoose.Schema(
-  {
-    ip: { type: String, required: false, select: false },
-  },
-  {
-    timestamps: true,
-  }
-);
+// const downloadSchema = new mongoose.Schema(
+//   {
+//     ip: { type: String, required: false, select: false },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
 
 const fileSchema = new mongoose.Schema(
   {
@@ -17,7 +17,7 @@ const fileSchema = new mongoose.Schema(
     fileSize: { type: Number, required: true },
     fileType: { type: String, required: true },
     key: { type: String, required: true },
-    downloads: { type: [downloadSchema], required: false },
+    downloads: { type: Number, default: 0 },
     privacy: { type: String, default: "public" },
   },
   {
